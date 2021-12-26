@@ -56,20 +56,20 @@
 
     //create board
     
-
+    cardArray.sort(()=>0.5 - Math.random())
 
     const grid = document.querySelector(".grid");
     const resultDisplay = document.querySelector('#result')
-    const cardsChosen = [];
-    const cardsChosenId = [];
-    const cardsWon = [];
+    var cardsChosen = [];
+    var cardsChosenId = [];
+    var cardsWon = [];
 
     function createBoard() {
 
         for (let i = 0; i < cardArray.length; i++) {
             let card = document.createElement('img');
             card.setAttribute('src','images/blank.png');
-            card.setAttribute('id', i)
+            card.setAttribute('data-id', i)
             card.addEventListener('click', flipCard)
             grid.appendChild(card)
         }
@@ -91,24 +91,21 @@
             
 
             cardsWon.push(cardsChosen);
-            console.log(cardsWon, 'cards won')
+            console.log(cardsWon.length, 'cards won')
         }else{
 
             cards[optionOneId].setAttribute('src', 'images/blank.png')
             cards[optionTwoId].setAttribute('src', 'images/blank.png')
             alert('Sorry, try again')
         }
-        console.log(cardsChosen, 'before')
-        
-        cardsChosen = []
-        cardsChosenId = []
+      
+        cardsChosen = [];
+        cardsChosenId = [];
 
-
-        console.log(cardsChosen, 'after')
         resultDisplay.innerText = cardsWon.length
         if(cardsWon.length === cardArray.length/2){
 
-            resultDisplay.textContent = 'Congratz, you found them all!'
+            resultDisplay.innerText = 'Congratz, you found them all!'
         }
     }
 
@@ -116,9 +113,10 @@
     //flip your card
 
     function flipCard() {
- 
-        let cardId = this.getAttribute('id');
-        console.log("flip", cardId)
+        
+      
+        let cardId = this.getAttribute('data-id');
+        
         cardsChosen.push(cardArray[cardId].name)
         cardsChosenId.push(cardId)
         this.setAttribute('src', cardArray[cardId].img)
@@ -128,10 +126,6 @@
             setTimeout(checkForMatch, 500)
         }
     }
-
-
-
-
 
     createBoard();
 
